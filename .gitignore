@@ -53,3 +53,32 @@ dkms.conf
 
 # debug information files
 *.dwo
+
+
+# =========================
+# Keil uVision
+# =========================
+
+# Build output directories
+Objects/
+Listings/
+
+# Keil generated files
+*.lst
+*.m51
+*.lnp
+*.build_log.htm
+
+# Keil user-specific settings
+*.uvgui
+*.uvgui.*
+*.uvguix
+*.uvguix.*
+*.uvopt
+*.uvoptx
+
+# Backup / temporary files
+*.bak
+
+# VS Code
+.vscode/

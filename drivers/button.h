@@ -16,4 +16,5 @@ typedef enum
 
 unsigned char button_read(Button button);
 unsigned char button_get(Button button);
+
 #endif

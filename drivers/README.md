@@ -41,3 +41,49 @@ The buzzer driver provides non-blocking sound playback for the passive buzzer on
   - `interval` — Actual elapsed time in milliseconds (ms) since the previous update.
 
 Call `buzzer_update()` periodically from the main loop or a centralized scheduler to maintain playback without blocking other tasks.
+
+## Number Driver
+
+An 8-digit seven-segment display driver for the STC89C52 microcontroller.
+
+### Functions
+
+**`number_set(unsigned char pos, unsigned char num)`**
+
+Sets the number displayed at a specified position.
+
+- `pos`: Display position (`0–7`).
+- `num`: Number to display (`0–9`), or `10` for a blank display.
+- Call this function whenever you want to change a displayed number.
+
+**`number_setdot(unsigned char pos)`**
+
+Turns on the decimal point at a specified position.
+
+- `pos`: Display position (`0–7`).
+
+**`number_cleardot(unsigned char pos)`**
+
+Turns off the decimal point at a specified position.
+
+- `pos`: Display position (`0–7`).
+
+**`number_update(void)`**
+
+Updates the display by scanning one digit per call.
+
+- Parameters: None.
+- Must be called repeatedly, preferably from a timer interrupt at a fixed interval.
+- Does not need to be called manually after every `number_set()` operation.
+
+### Usage
+
+```c
+number_set(0, 5);       // Display 5 at position 0
+number_set(1, 8);       // Display 8 at position 1
+number_setdot(0);       // Turn on decimal point at position 0
+number_cleardot(0);     // Turn off decimal point at position 0
+number_set(1, 10);      // Clear position 1
+```
+
+**Important:** Use `number_set()` whenever the displayed number needs to change. Call `number_update()` continuously through a periodic timer interrupt to maintain the display.

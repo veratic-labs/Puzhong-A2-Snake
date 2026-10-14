@@ -87,3 +87,21 @@ number_set(1, 10);      // Clear position 1
 ```
 
 **Important:** Use `number_set()` whenever the displayed number needs to change. Call `number_update()` continuously through a periodic timer interrupt to maintain the display.
+
+# Matrix Keypad Driver
+
+A 4×4 matrix keypad driver for the 8051 microcontroller.
+
+## Usage
+
+```c
+unsigned char keypad_get(void);
+```
+
+Returns the ID of the pressed key.
+
+**Return value:**
+- `0`: No key is pressed.
+- `1–16`: ID of the pressed key.
+
+**Note:** The function waits until the key is released before returning its ID. This function is blocking.

@@ -105,3 +105,57 @@ Returns the ID of the pressed key.
 - `1–16`: ID of the pressed key.
 
 **Note:** The function waits until the key is released before returning its ID. This function is blocking.
+
+# 8×8 LED Matrix Driver
+
+A simple 8×8 LED matrix driver for the 8051 microcontroller using the 74HC595 shift register.
+
+## Functions
+
+### `display_set(unsigned char col, unsigned char row)`
+
+Turns on a specified pixel.
+
+- `col`: Column index (0–7).
+- `row`: Row index (0–7).
+
+### `display_clear(void)`
+
+Clears all pixels in the display buffer.
+
+### `display_update(void)`
+
+Scans one row of the LED matrix per call.
+
+Should be called approximately every 1 ms to maintain a stable display.
+
+## Example
+
+```c
+#include "display.h"
+
+void main(void)
+{
+    display_clear();
+    display_set(2, 3);
+    display_set(3, 3);
+
+    while (1)
+    {
+        if (tick - last_update >= 1)
+        {
+            last_update = tick;
+            display_update();
+        }
+    }
+}
+```
+
+*Assumes `tick` is updated every 1 ms by the timer module and `last_update` is initialized to 0. The example omits timer setup and shared-counter synchronization.*
+
+## Notes
+
+- Coordinates range from 0 to 7.
+- Display data is stored in an 8-byte array.
+- `display_set()` and `display_clear()` modify the buffer.
+- `display_update()` updates the hardware one row at a time.

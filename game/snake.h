@@ -1,0 +1,21 @@
+#ifndef HEAD_H
+#define HEAD_H
+
+typedef enum {
+    UP = 0,
+    DOWN,
+    LEFT,
+    RIGHT
+} Direction;
+
+typedef struct {
+    unsigned char x;
+    unsigned char y;
+} Section;
+
+void head_change_direction(Direction direction);
+void head_move(void);
+const Section *snake_get_body(void);
+unsigned char snake_get_length(void);
+
+#endif

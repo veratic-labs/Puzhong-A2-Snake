@@ -5,13 +5,13 @@
 
 Food food;
 
+static const Section *body;
+static unsigned char length;
+
 void generate_food(void)
 {
     unsigned int i;
     unsigned char valid;
-    
-    const Section *body = snake_get_body();
-    unsigned char length = snake_get_length();
 
     //prevent generating food on snake body
     while (1)
@@ -23,7 +23,7 @@ void generate_food(void)
 
         for (i = 0; i < length; i++)
         {
-            if (body[i].x == x && body[i].y == y)
+            if (body[i].x == food.x && body[i].y == food.y)
                 valid = 0;
         }
 
@@ -34,6 +34,9 @@ void generate_food(void)
 
 unsigned char check_food_collision(void)
 {
+    body = snake_get_body();
+    length = snake_get_length();
+    
     if (body[0].x == food.x && body[0].y == food.y)
         return 1;
     else

@@ -1,7 +1,7 @@
 #include <reg52.h>
 #include "snake.h"
 
-static Section snake[64];
+static xdata Section snake[64];
 
 static unsigned char length = 1;
 
@@ -54,40 +54,40 @@ void head_move(void)
     }
 
     //cross boarder
-    if (body[0].x > 7)
-        body[0].x = 0;
+    if (snake[0].x > 7)
+        snake[0].x = 0;
 
-    else if (body[0].x < 0)
-        body[0].x = 7;
+    else if (snake[0].x < 0)
+        snake[0].x = 7;
 
-    if (body[0].y > 7)
-        body[0].y = 0;
+    if (snake[0].y > 7)
+        snake[0].y = 0;
 
-    else if (body[0].y < 0)
-        body[0].y = 7;  
+    else if (snake[0].y < 0)
+        snake[0].y = 7;  
 }
 
 void body_move(void)
 {
     int i;
 
-    old_tail = body[length - 1];
+    old_tail = snake[length - 1];
 
     //end section moves at first
     for (i = length - 1; i > 0; i--)
-        body[i] = body[i-1]
+        snake[i] = snake[i-1];
 }
 
 void add_section(void)
 {
     length++;
 
-    body[length - 1] = old_tail;
+    snake[length - 1] = old_tail;
 }
 
 const Section *snake_get_body(void)
 {
-    return body;
+    return snake;
 }
 
 unsigned char snake_get_length(void)

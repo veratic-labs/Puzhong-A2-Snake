@@ -6,6 +6,7 @@
 #include "display.h"
 
 #include "snake.h"
+#include "food.h"
 
 unsigned long tick;
 unsigned long last_tick = 0;
@@ -21,7 +22,7 @@ void main(void)
         
         update_direction();
 
-        if (tick - last >= 1)
+        if (tick - last_tick >= 1)
         {
             last_tick = tick;
 
@@ -70,6 +71,7 @@ void update_position(void)
 
     if (check_food_collision())
         add_section();
+        generate_food();
 }
 
 //draw snake body
@@ -78,7 +80,8 @@ void display(void)
     unsigned char i;
     const Section *body = snake_get_body();
     unsigned char length = snake_get_length();
-    Food food = get_food()
+    Food food;
+    food = get_food();
 
     display_clear();
     
@@ -88,7 +91,7 @@ void display(void)
         display_set(body[i].x, body[i].y);
     }
 
-    display_set(food.x, food.y)
+    display_set(food.x, food.y);
 
     display_update();
 }

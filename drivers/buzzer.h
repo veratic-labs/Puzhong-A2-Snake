@@ -5,7 +5,6 @@ sbit BEEP = P2^5;
 
 void buzzer_init(void);
 void buzzer_play(unsigned int frequency, unsigned int duration);
-void buzzer_update(void);
-void update_tick(unsigned int interval);
+void buzzer_update(unsigned int interval);
 
 #endif

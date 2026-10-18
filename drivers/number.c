@@ -1,14 +1,14 @@
 #include <reg52.h>
 #include "number.h"
 
-static unsigned char data[8] = {10, 10, 10, 10, 10, 10, 10, 10};
+static unsigned char digits[8] = {10, 10, 10, 10, 10, 10, 10, 10};
 static unsigned char dots[8] = {0};
 
 //set dot for a digit
 void number_setdot(unsigned char pos)
 {
     if (pos >= 8)
-        return
+        return;
 
     dots[pos] = 1;
 }
@@ -26,7 +26,7 @@ void number_set(unsigned char pos, unsigned char num)
     if (pos >= 8)
         return;
     
-    data[pos] = num;
+    digits[pos] = num;
 }
 
 void number_update(void)
@@ -37,7 +37,7 @@ void number_update(void)
     P2 = select[i];
     
     // Combine the digit segment code with its decimal point state
-    P0 = num[data[i]] | (dots[i] << 7);
+    P0 = num[digits[i]] | (dots[i] << 7);
 
     i++;
 

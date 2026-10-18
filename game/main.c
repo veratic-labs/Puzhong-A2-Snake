@@ -37,7 +37,7 @@ void main(void)
     }
 }
 
-//keypad change direction
+//keypad change direction 
 void update_direction(void)
 {
     switch (keypad_get())
@@ -65,7 +65,11 @@ void update_direction(void)
 
 void update_position(void)
 {
+    body_move();
     head_move();
+
+    if (check_food_collision())
+        add_section();
 }
 
 //draw snake body
@@ -74,6 +78,7 @@ void display(void)
     unsigned char i;
     const Section *body = snake_get_body();
     unsigned char length = snake_get_length();
+    Food food = get_food()
 
     display_clear();
     
@@ -82,6 +87,8 @@ void display(void)
     {
         display_set(body[i].x, body[i].y);
     }
+
+    display_set(food.x, food.y)
 
     display_update();
 }

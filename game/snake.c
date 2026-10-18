@@ -7,6 +7,8 @@ static unsigned char length = 1;
 
 static Direction status = RIGHT;
 
+static Section old_tail;
+
 void snake_init(void)
 {
     //initial position
@@ -50,6 +52,37 @@ void head_move(void)
         default:
             return;
     }
+
+    //cross boarder
+    if (body[0].x > 7)
+        body[0].x = 0;
+
+    else if (body[0].x < 0)
+        body[0].x = 7;
+
+    if (body[0].y > 7)
+        body[0].y = 0;
+
+    else if (body[0].y < 0)
+        body[0].y = 7;  
+}
+
+void body_move(void)
+{
+    int i;
+
+    old_tail = body[length - 1];
+
+    //end section moves at first
+    for (i = length - 1; i > 0; i--)
+        body[i] = body[i-1]
+}
+
+void add_section(void)
+{
+    length++;
+
+    body[length - 1] = old_tail;
 }
 
 const Section *snake_get_body(void)

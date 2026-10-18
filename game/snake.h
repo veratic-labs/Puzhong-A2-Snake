@@ -9,12 +9,14 @@ typedef enum {
 } Direction;
 
 typedef struct {
-    unsigned char x;
-    unsigned char y;
+    char x;
+    char y;
 } Section;
 
 void head_change_direction(Direction direction);
 void head_move(void);
+void body_move(void);
+void add_section(void);
 const Section *snake_get_body(void);
 unsigned char snake_get_length(void);
 

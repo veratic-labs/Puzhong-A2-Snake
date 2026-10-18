@@ -4,6 +4,7 @@
 #include "timer.h"
 #include "keypad.h"
 #include "display.h"
+#include "number.h"
 
 #include "snake.h"
 #include "food.h"
@@ -20,13 +21,12 @@ void main(void)
     while (1)
     {
         tick = timer_get();
-        
-        update_direction();
 
         if (tick - last_tick >= 1)
         {
             last_tick = tick;
 
+            update_direction();
             display();
         }
 

@@ -39,12 +39,30 @@ unsigned char keypad_read(void)
 
 unsigned char keypad_get(void)
 {
-    unsigned char key_id = keypad_read();
-
-    if (key_id == 0)
-        return 0;
+    static unsigned char last = 0;
+    static unsigned char stable = 0;
+    static unsigned char count = 0;
     
-    while (keypad_read() != 0);
+    unsigned char key = keypad_read();
 
-    return key_id;
+    if (key == last)
+    {
+        if (count < 20)
+            count++;
+    }
+    else
+    {
+        count = 0;
+        last = key;
+    }
+
+    if (count >= 20 && key != stable)
+    {
+        stable = key;
+
+        if (stable != 0)
+            return stable;
+    }
+
+    return 0;
 }

@@ -15,6 +15,7 @@ unsigned long last_move = 0;
 void main(void)
 {
     timer_init();
+    snake_init();
     
     while (1)
     {
@@ -70,8 +71,10 @@ void update_position(void)
     head_move();
 
     if (check_food_collision())
+    {
         add_section();
         generate_food();
+    }
 }
 
 //draw snake body

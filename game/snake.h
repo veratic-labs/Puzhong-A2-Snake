@@ -13,6 +13,7 @@ typedef struct {
     char y;
 } Section;
 
+void snake_init(void);
 void head_change_direction(Direction direction);
 void head_move(void);
 void body_move(void);

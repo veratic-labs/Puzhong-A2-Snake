@@ -5,7 +5,7 @@
 
 Food food;
 
-static const Section *body;
+static const Section *snake;
 static unsigned char length;
 
 void generate_food(void)
@@ -23,7 +23,7 @@ void generate_food(void)
 
         for (i = 0; i < length; i++)
         {
-            if (body[i].x == food.x && body[i].y == food.y)
+            if (snake[i].x == food.x && snake[i].y == food.y)
                 valid = 0;
         }
 
@@ -34,10 +34,10 @@ void generate_food(void)
 
 unsigned char check_food_collision(void)
 {
-    body = snake_get_body();
+    snake = snake_get_body();
     length = snake_get_length();
     
-    if (body[0].x == food.x && body[0].y == food.y)
+    if (snake[0].x == food.x && snake[0].y == food.y)
         return 1;
     else
         return 0;

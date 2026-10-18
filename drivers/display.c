@@ -32,10 +32,12 @@ void send_dat(unsigned char dat)
 
 void display_set(unsigned char col, unsigned char row)
 {
+    col = 7 - col;
+    
     if (col >= 8 || row >= 8)
         return;
     
-    display[row] |= (1 << col);
+    display[col] |= (1 << row);
 }
 
 void display_clear(void)

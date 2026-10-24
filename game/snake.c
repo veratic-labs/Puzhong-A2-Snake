@@ -3,7 +3,7 @@
 
 static xdata Section snake[64];
 
-static unsigned char length = 1;
+static unsigned char length;
 
 static Direction status = RIGHT;
 
@@ -14,6 +14,8 @@ void snake_init(void)
     //initial position
     snake[0].x = 3;
     snake[0].y = 3;
+
+    length = 1;
 }
 
 void head_change_direction(Direction direction)
@@ -83,6 +85,19 @@ void add_section(void)
     length++;
 
     snake[length - 1] = old_tail;
+}
+
+unsigned char check_body_collision(void)
+{
+    unsigned char i;
+
+    for(i = 1; i < length; i++)
+    {
+        if (snake[i].x == snake[0].x && snake[i].y == snake[0].y)
+            return 1;
+    }
+
+    return 0;
 }
 
 const Section *snake_get_body(void)

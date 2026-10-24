@@ -56,6 +56,7 @@ unsigned char keypad_get(void)
         last = key;
     }
 
+    //only return if key status is different
     if (count >= 20 && key != stable)
     {
         stable = key;

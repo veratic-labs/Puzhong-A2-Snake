@@ -5,11 +5,13 @@
 #include "keypad.h"
 #include "display.h"
 #include "number.h"
+#include "button.h"
 
 #include "snake.h"
 #include "food.h"
 
 unsigned long tick;
+unsigned char run = 1;
 unsigned long last_tick = 0;
 unsigned long last_move = 0;
 
@@ -26,17 +28,45 @@ void main(void)
         {
             last_tick = tick;
 
+            check_gameover();
+            update_button();
             update_direction();
             display();
         }
 
-        if (tick - last_move >= 1000)
+        if (run)
         {
-            last_move = tick;
+            if (tick - last_move >= 1000)
+            {
+                last_move = tick;
 
-            update_position();
+                update_position();
+            }
         }
+
+        else
+            last_move = tick;
     }
+}
+
+//use button to control running state and reset
+void update_button(void)
+{
+    unsigned char press = button_get();
+
+    //press button1 to start or pause the game
+    if (press == 1 && !check_body_collision())
+        run = !run;
+
+    //press button2 to reset the game
+    else if (press == 2)
+        snake_init();
+}
+
+void check_gameover(void)
+{
+    if (check_body_collision())
+        run = 0;
 }
 
 //keypad change direction 

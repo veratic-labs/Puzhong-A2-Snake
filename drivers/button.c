@@ -2,36 +2,46 @@
 #include "button.h"
 
 //0 means pressed
-unsigned char button_read(Button button)
+unsigned char button_read(void)
 {
-    switch (button)
-    {
-        case BUTTON1:
-            return button1;
-        
-        case BUTTON2:
-            return button2;
+    if (button1 == 0)
+        return 1;
 
-        case BUTTON3:
-            return button3;
+    else if (button2 == 0)
+        return 2;
 
-        case BUTTON4:
-            return button4;
+    else if (button3 == 0)
+        return 3;
 
-        default:
-            return 1;
-    }
+    else if (button4 == 0)
+        return 4;
+
+    return 0;
 }
 
-unsigned char button_get(Button button)
+unsigned char button_get(void)
 {
-    if (button_read(button))
-        return 0;
+    static unsigned char last = 0;
+    static unsigned char stable = 0;
+    static unsigned char count = 0;
 
+    unsigned char button = button_read();
+
+    if (button == last)
+        count++;
     else
     {
-        while (button_read(button) == 0);
-
-        return 1;
+        count = 0;
+        last = button;
     }
+
+    if (count >= 20 && stable != button)
+    {
+        stable = button;
+
+        if (stable != 0)
+            return stable;
+    }
+
+    return 0;
 }

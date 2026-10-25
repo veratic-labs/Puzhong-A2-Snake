@@ -39,7 +39,11 @@ void buzzer_update(unsigned int interval)
         if (duration_tick >= duration)
         {
             play = 0;
+            BEEP = 1;
             duration_tick = 0;
+            beep_tick = 0;
+
+            return;
         }
 
         beep_tick += interval;

@@ -6,12 +6,13 @@
 #include "display.h"
 #include "number.h"
 #include "button.h"
+#include "buzzer.h"
 
 #include "snake.h"
 #include "food.h"
 
 unsigned long tick;
-unsigned char run = 1;
+unsigned char run = 0;
 unsigned long last_tick = 0;
 unsigned long last_move = 0;
 
@@ -33,6 +34,7 @@ void main(void)
             update_button();
             update_direction();
             display_draw();
+            buzzer_update(1);
         }
 
         if (run)
@@ -58,7 +60,10 @@ void update_button(void)
 
     //press button1 to start or pause the game
     if (press == 1 && !check_body_collision())
+    {
         run = !run;
+        buzzer_play(500, 100);
+    }
 
     //press button2 to reset the game
     else if (press == 2)
@@ -68,6 +73,8 @@ void update_button(void)
         generate_food();
 
         display_update();
+
+        buzzer_play(500, 100);
     }
     
 }
@@ -85,18 +92,22 @@ void update_direction(void)
     {
         case 11:
             head_change_direction(UP);
+            buzzer_play(500, 100);
             break;
 
         case 15:
             head_change_direction(DOWN);
+            buzzer_play(500, 100);
             break;
 
         case 14:
             head_change_direction(LEFT);
+            buzzer_play(500, 100);
             break;
 
         case 16:
             head_change_direction(RIGHT);
+            buzzer_play(500, 100);
             break;
 
         default:

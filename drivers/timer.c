@@ -1,7 +1,7 @@
 #include <reg52.h>
 #include "timer.h"
 
-static unsigned long tick = 0;
+static volatile unsigned long tick = 0;
 
 void timer_init(void)
 {

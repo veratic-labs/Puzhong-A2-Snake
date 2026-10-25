@@ -1,4 +1,3 @@
-#include <reg52.h>
 #include "snake.h"
 
 static xdata Section snake[64];
@@ -9,6 +8,8 @@ static Direction status = RIGHT;
 
 static Section old_tail;
 
+static Direction last_status = RIGHT;
+
 void snake_init(void)
 {
     //initial position
@@ -16,14 +17,17 @@ void snake_init(void)
     snake[0].y = 3;
 
     length = 1;
+
+    status = RIGHT;
+    last_status = RIGHT;
 }
 
 void head_change_direction(Direction direction)
 {
-    if ((status == UP && direction == DOWN) ||
-        (status == DOWN && direction == UP) ||
-        (status == LEFT && direction == RIGHT) ||
-        (status == RIGHT && direction == LEFT))
+    if ((last_status == UP && direction == DOWN) ||
+        (last_status == DOWN && direction == UP) ||
+        (last_status == LEFT && direction == RIGHT) ||
+        (last_status == RIGHT && direction == LEFT))
     {
         return;
     }
@@ -33,6 +37,8 @@ void head_change_direction(Direction direction)
 
 void head_move(void)
 {
+    last_status = status;
+    
     switch (status)
     {
         case UP:
@@ -82,6 +88,9 @@ void body_move(void)
 
 void add_section(void)
 {
+    if (length >= 64)
+        return;
+
     length++;
 
     snake[length - 1] = old_tail;

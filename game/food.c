@@ -1,4 +1,3 @@
-#include <reg52.h>
 #include "food.h"
 #include <stdlib.h>
 #include "snake.h"
@@ -12,6 +11,9 @@ void generate_food(void)
 {
     unsigned int i;
     unsigned char valid;
+
+    snake = snake_get_body();
+    length = snake_get_length();
 
     //prevent generating food on snake body
     while (1)
@@ -29,6 +31,9 @@ void generate_food(void)
 
         if (valid)
             break;
+
+        if (length >= 64)
+            return;
     }
 }
 

@@ -48,7 +48,7 @@ void display_clear(void)
         display[i] = 0x00;
 }
 
-void display_update(void)
+void display_draw(void)
 {
     static unsigned char i = 0;
 

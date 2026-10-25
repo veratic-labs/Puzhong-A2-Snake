@@ -19,6 +19,7 @@ void main(void)
 {
     timer_init();
     snake_init();
+    display_update();
     
     while (1)
     {
@@ -27,20 +28,21 @@ void main(void)
         if (tick - last_tick >= 1)
         {
             last_tick = tick;
-
+ 
             check_gameover();
             update_button();
             update_direction();
-            display();
+            display_draw();
         }
 
         if (run)
         {
-            if (tick - last_move >= 1000)
+            if (tick - last_move >= 500)
             {
                 last_move = tick;
 
                 update_position();
+                display_update();
             }
         }
 
@@ -60,7 +62,14 @@ void update_button(void)
 
     //press button2 to reset the game
     else if (press == 2)
+    {
         snake_init();
+        last_move = tick;
+        generate_food();
+
+        display_update();
+    }
+    
 }
 
 void check_gameover(void)
@@ -108,7 +117,7 @@ void update_position(void)
 }
 
 //draw snake body
-void display(void)
+void display_update(void)
 {
     unsigned char i;
     const Section *body = snake_get_body();
@@ -125,6 +134,4 @@ void display(void)
     }
 
     display_set(food.x, food.y);
-
-    display_update();
 }

@@ -21,14 +21,11 @@ The minimum time unit supported by the system is **1 ms**.
 
 The button driver provides input detection for the four buttons on the Puzhong-A2 development board.
 
-- `button_read(Button button)` — Reads the current button state.
-- `button_get(Button button)` — Gets the button state.
-
-Both functions accept `BUTTON1`, `BUTTON2`, `BUTTON3`, or `BUTTON4` as an argument.
+- `unsigned char button_get(void)` — Returns the number of the pressed button.
 
 **Return values:**
-- `1` — Button is pressed.
-- `0` — Button is not pressed.
+- `1–4` — Number of the pressed button.
+- `0` — No button is pressed.
 
 ### Buzzer
 
@@ -112,20 +109,20 @@ A simple 8×8 LED matrix driver for the 8051 microcontroller using the 74HC595 s
 
 ## Functions
 
-### `display_set(unsigned char col, unsigned char row)`
+### `void display_set(unsigned char col, unsigned char row)`
 
 Turns on a specified pixel.
 
 - `col`: Column index (0–7).
 - `row`: Row index (0–7).
 
-### `display_clear(void)`
+### `void display_clear(void)`
 
 Clears all pixels in the display buffer.
 
-### `display_update(void)`
+### `void display_draw(void)`
 
-Scans one row of the LED matrix per call.
+Draws one row of the LED matrix per call.
 
 Should be called approximately every 1 ms to maintain a stable display.
 
@@ -145,7 +142,7 @@ void main(void)
         if (tick - last_update >= 1)
         {
             last_update = tick;
-            display_update();
+            display_draw();
         }
     }
 }
@@ -158,4 +155,4 @@ void main(void)
 - Coordinates range from 0 to 7.
 - Display data is stored in an 8-byte array.
 - `display_set()` and `display_clear()` modify the buffer.
-- `display_update()` updates the hardware one row at a time.
+- `display_draw()` scans and displays one row at a time.
